@@ -5,6 +5,8 @@
 	<div class="col-sm-6">
 		<h1 class="monospace">
 			{{ venue.name }}
+			<a href="{{ url_for('index') }}" title="Back to homepage"><i class="fa fa-home pull-right"></i></a>
+			<a href="/venues/{{ venue.id }}/delete" title="Delete this Venue"><button >&cross;</button></a>
 		</h1>
 		<p class="subtitle">
 			ID: {{ venue.id }}
@@ -74,6 +76,21 @@
 		{% endfor %}
 	</div>
 </section>
+
+<script>
+	const deletebuttons = document.querySelectorAll('.delete-button');
+	for (let i = 0; i<deletebuttons.length; i++) {
+		const deletebutton = deletebuttons[i];
+		deletebutton.onclick = function(e) {
+			console.log('event', e);
+			const todoId = e.target.dataset['id'];
+
+			fetch('/venues/' + todoId, {
+				method: 'DELETE'
+			});
+		}
+	}
+</script>
 
 {% endblock %}
 
